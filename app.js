@@ -22,6 +22,7 @@ db.on('error', (err) => {
 const app = express();
 
 let Article = require('./models/articles');
+let Athlete = require('./models/athletes');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -71,20 +72,26 @@ app.get('*', (req, res, next) => {
 
 app.get('/', (req, res) => {
     Article.find({}, (err, articles) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render('index', {
-                title: "Articles",
-                articles: articles
-            });
-        }
+        Athlete.find({}, (err, athlete) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render('index', {
+                    articles_title: "Articles",
+                    articles: articles,
+                    athletes_title: "Athletes",
+                    athletes: athlete
+                });
+            }
+        });
     });
 });
 
 let articles = require('./routes/articles');
+let athletes = require('./routes/athletes');
 let users = require('./routes/users');
 app.use('/articles', articles);
+app.use('/athletes', athletes);
 app.use('/users', users);
 
 app.listen(3000, () => {

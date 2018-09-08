@@ -1,8 +1,14 @@
 extends layout
 
 block content
-    h1 #{title}
+    h1 #{articles_title}
     ul.kist-group
         each article, i in articles
             li.list-group-item
                 a(href='/articles/'+article._id)= article.title
+    hr
+    h1 #{athletes_title}
+    ul.kist-group
+        each athlete, i in athletes
+            li.list-group-item
+                a(href='/athletes/'+athlete._id)= athlete.name            
